@@ -3,13 +3,13 @@ package modules;
 /**
  * Created by extradikke on 16/04/15.
  */
-public class SavableNode {
+public class SimpleNode {
 
     private String articleName;
     private int numberOfLinks;
     private String[] linkNames;
 
-    public SavableNode(String articleName, String[] linkNames) {
+    public SimpleNode(String articleName, String[] linkNames) {
         this.articleName = articleName;
         this.linkNames = linkNames;
         this.numberOfLinks = linkNames.length;

@@ -1,7 +1,7 @@
 package main;
 
 import modules.Node;
-import modules.SavableNode;
+import modules.SimpleNode;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,13 +13,13 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 public class GraphGenerator {
     private HashMap<String, Boolean> queriesMade;
     private ConcurrentLinkedQueue<Node> newNodes;
-    private ArrayList<SavableNode> savableNodes;
+    private ArrayList<Node> readyNodes;
     private QueryExecutor queryExecutor;
 
     public GraphGenerator() {
-        HashMap<String, Boolean> queriesMade = new HashMap<String, Boolean>();
-        ConcurrentLinkedQueue<Node> newNodes = new ConcurrentLinkedQueue<Node>();
-        ArrayList<SavableNode> savableNodes = new ArrayList<SavableNode>();
+        queriesMade = new HashMap<String, Boolean>();
+        newNodes = new ConcurrentLinkedQueue<Node>();
+        readyNodes = new ArrayList<Node>();
         queryExecutor = new QueryExecutor();
 
 
@@ -36,6 +36,6 @@ public class GraphGenerator {
     }
 
     public void saveNodes() {
-        //TODO JSON magic goes here
+        //TODO take nodes out of readyNodes, save
     }
 }

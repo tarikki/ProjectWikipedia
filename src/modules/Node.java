@@ -17,15 +17,17 @@ public class Node {
     private String articleName;
     private int numberOfLinks;
     private int linksProcessed = 0;
+    private int distanceFromStart;
     private ArrayList<String> linkNames;
     private boolean[] linkHealth;
     private boolean[] processed;
 
 
-    public Node(String articleName, ArrayList<String> linkNames) {
+    public Node(String articleName, ArrayList<String> linkNames, int distanceFromStart) {
         this.articleName = articleName;
         this.numberOfLinks = linkNames.size();
         this.linkNames = linkNames;
+        this.distanceFromStart = distanceFromStart;
         this.linkHealth = new boolean[numberOfLinks];
         this.linkHealth = new boolean[numberOfLinks];
 
