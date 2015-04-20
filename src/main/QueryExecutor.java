@@ -7,13 +7,8 @@ import modules.QueryInterface;
  */
 public class QueryExecutor implements QueryInterface {
 
-
-
-
-
-
     @Override
-    public String query(String[] articleName) {
-        return null;
+    public int query(int articleId) {
+        return 0;
     }
 }

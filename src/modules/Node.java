@@ -6,52 +6,45 @@ package modules;
 
 import java.util.ArrayList;
 
-/***
+/**
  * The node that will be used for processing, not the one that is saved as JSON
- *
+ * <p/>
  * private int numberOfLinks: number of linkNames on the page
  * private String[] linkNames: all the linkNames on the page
  * private boolean[] linkHealth: whether the link is found or not, used mainly for debugging
  */
 public class Node {
     private String articleName;
-    private int numberOfLinks;
-    private int linksProcessed = 0;
+    private int articleId;
     private int distanceFromStart;
     private ArrayList<String> linkNames;
     private boolean[] linkHealth;
-    private boolean[] processed;
 
 
-    public Node(String articleName, ArrayList<String> linkNames, int distanceFromStart) {
-        this.articleName = articleName;
-        this.numberOfLinks = linkNames.size();
+    public Node(int articleId, ArrayList<String> linkNames, int distanceFromStart) {
+        this.articleId = articleId;
         this.linkNames = linkNames;
         this.distanceFromStart = distanceFromStart;
-        this.linkHealth = new boolean[numberOfLinks];
-        this.linkHealth = new boolean[numberOfLinks];
+        this.linkHealth = new boolean[linkNames.size()];
+        this.linkHealth = new boolean[linkNames.size()];
 
     }
 
-    public void markAsProcessed(String link, boolean health){
+    public void markAsProcessed(String link, boolean health) {
         //TODO link to error log
         //TODO check if link in arrayList
         int position = linkNames.indexOf(link);
-        processed[position] = true;
         linkHealth[position] = health;
-        linksProcessed++;
         //TODO throw error if linksProcessed > numberOfLinks
     }
 
-    public boolean isCompletelyProcessed(){
-        return linksProcessed == numberOfLinks;
+    public void nameArticle(String articleName){
+        this.articleName = articleName;
     }
 
-    public String[] linksToArray(){
+    public String[] linksToArray() {
         return linkNames.toArray(new String[linkNames.size()]);
     }
-
-
 
     public String getArticleName() {
         return articleName;
@@ -70,11 +63,7 @@ public class Node {
     }
 
     public int getNumberOfLinks() {
-        return numberOfLinks;
-    }
-
-    public void setNumberOfLinks(int numberOfLinks) {
-        this.numberOfLinks = numberOfLinks;
+        return linkNames.size();
     }
 
     public boolean[] getLinkHealth() {
@@ -83,13 +72,5 @@ public class Node {
 
     public void setLinkHealth(boolean[] linkHealth) {
         this.linkHealth = linkHealth;
-    }
-
-    public boolean[] getProcessed() {
-        return processed;
-    }
-
-    public void setProcessed(boolean[] processed) {
-        this.processed = processed;
     }
 }

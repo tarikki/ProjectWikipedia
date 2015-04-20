@@ -7,9 +7,9 @@ public interface QueryInterface {
 
     /**
      *
-     * @param articleName name of article queried
+     * @param articleId name of article queried
      * @return array of links, null if article not found
      */
-    public String query(String[] articleName);
+    public int query(int articleId);
 
 }

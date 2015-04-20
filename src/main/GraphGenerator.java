@@ -1,8 +1,6 @@
 package main;
 
 import modules.Node;
-import modules.SimpleNode;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -21,12 +19,14 @@ public class GraphGenerator {
         newNodes = new ConcurrentLinkedQueue<Node>();
         readyNodes = new ArrayList<Node>();
         queryExecutor = new QueryExecutor();
+        Translator translator = new Translator();
+
 
 
     }
 
     public void start(String startingArticleName) {
-        //TODO execute query on startingArticle, make node, put it in newNodes
+        //TODO translate article name to int, execute query on startingArticle, make node, put it in newNodes
     }
 
     public void processAllNodes() {
@@ -36,6 +36,6 @@ public class GraphGenerator {
     }
 
     public void saveNodes() {
-        //TODO take nodes out of readyNodes, save
+        //TODO take nodes out of readyNodes, get their names from the translator, save
     }
 }
