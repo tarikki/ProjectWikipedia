@@ -13,7 +13,7 @@ public class Translator {
 
     private BiMap<String, Integer> articleName_Number;
     private BiMap<Integer, String> number_Name;
-    private String articleMappingLocation;
+    private String articleMappingLocation = "/media/extradikke/UbuntuData/wikipedia_data/data_dump/dataMaps/article_name_to_number.txt";
 
 
     public Translator() {
@@ -30,8 +30,10 @@ public class Translator {
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(articleMappingLocation))) {
             String currentLine;
             while ((currentLine = bufferedReader.readLine()) != null) {
-                String[] keyValue = currentLine.split("---");
-                articleName_Number.put(keyValue[0], Integer.getInteger(keyValue[1]));
+                String[] keyValue = currentLine.split("\\|");
+//                System.out.println(keyValue[0] + " " + keyValue[1] + " " + Integer.valueOf(keyValue[1].trim()));
+                if (keyValue[0] != null){
+                articleName_Number.put(keyValue[0], Integer.valueOf(keyValue[1].trim()));}
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -44,7 +46,7 @@ public class Translator {
     }
 
     public int getNumberFromName(String name) {
-        return articleName_Number.get(name);
+        return articleName_Number.get(name.toLowerCase());
     }
 
     public String getNameFromNumber(int number) {

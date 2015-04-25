@@ -10,6 +10,6 @@ public interface QueryInterface {
      * @param articleId name of article queried
      * @return array of links, null if article not found
      */
-    public int query(int articleId);
+    public int[] query(int articleId);
 
 }
