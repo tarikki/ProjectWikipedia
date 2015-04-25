@@ -95,23 +95,22 @@ public class GraphGenerator {
             String nodeFileName = currentNode.getArticleId() + ".json";
             String finalNodePath = nodeFolder + nodeFileName;
             String nodeAsJSON = gson.toJson(currentNode);
-            //TODO something goes wrong here
+         
             if (nodeAsJSON.length() < 10){
                 System.out.println(currentNode);
             }
             try {
                 fileWriter = new FileWriter(finalNodePath);
-                //TODO or here
+
+
                 fileWriter.write(nodeAsJSON);
+                fileWriter.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-        try {
-            fileWriter.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+
         }
     }
-}
+
 
