@@ -43,7 +43,7 @@ public class GraphGenerator {
 
     public void start(String startingArticleName) {
         //TODO translate article name to int, execute query on startingArticle, make node, put it in newNodes
-       this.startingArticle = startingArticleName;
+        this.startingArticle = startingArticleName;
         int articleNumber = translator.getNumberFromName(startingArticleName);
         int[] links = queryExecutor.query(articleNumber);
         Node node = new Node(articleNumber, links, 0);
@@ -57,13 +57,14 @@ public class GraphGenerator {
             Node currentNode = newNodes.poll();
             ArrayList<Integer> links = currentNode.getLinkNumbers();
             for (int currentLink : links) {
-                if (currentLink != 0){
-                if (!queriesMade.contains(currentLink) && currentNode.getDistanceFromStart() + 1 <= maxDistance) {
-                    System.out.println("Querying page: " + translator.getNameFromNumber(currentLink));
-                    int[] newLinks = queryExecutor.query(currentLink);
-                    Node newNode = new Node(currentLink, newLinks, currentNode.getDistanceFromStart() + 1);
-                    newNodes.add(newNode);
-                }}
+                if (currentLink != 0) {
+                    if (!queriesMade.contains(currentLink) && currentNode.getDistanceFromStart() + 1 <= maxDistance) {
+                        System.out.println("Querying page: " + translator.getNameFromNumber(currentLink));
+                        int[] newLinks = queryExecutor.query(currentLink);
+                        Node newNode = new Node(currentLink, newLinks, currentNode.getDistanceFromStart() + 1);
+                        newNodes.add(newNode);
+                    }
+                }
             }
             readyNodes.add(currentNode);
         }
@@ -79,13 +80,12 @@ public class GraphGenerator {
         Date date = new Date();
         String timestamp = dateFormat.format(date);
 
-        String nodeFolder = FilePaths.NODES_DIRECTORY + startingArticle + " " + timestamp+"\\";
+        String nodeFolder = FilePaths.NODES_DIRECTORY + startingArticle + " " + timestamp + "\\";
 
         /// Create a folder for node
         File nodeDir = new File(nodeFolder);
 
-        if (!nodeDir.exists())
-        {
+        if (!nodeDir.exists()) {
             nodeDir.mkdir();
         }
 
@@ -95,14 +95,9 @@ public class GraphGenerator {
             String nodeFileName = currentNode.getArticleId() + ".json";
             String finalNodePath = nodeFolder + nodeFileName;
             String nodeAsJSON = gson.toJson(currentNode);
-         
-            if (nodeAsJSON.length() < 10){
-                System.out.println(currentNode);
-            }
+
             try {
                 fileWriter = new FileWriter(finalNodePath);
-
-
                 fileWriter.write(nodeAsJSON);
                 fileWriter.close();
             } catch (IOException e) {
@@ -110,7 +105,7 @@ public class GraphGenerator {
             }
         }
 
-        }
     }
+}
 
 
