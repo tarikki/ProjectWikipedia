@@ -5,12 +5,15 @@ import com.google.gson.GsonBuilder;
 import modules.Node;
 import util.FilePaths;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.security.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Date;
 import java.util.HashSet;
-import java.util.InputMismatchException;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
@@ -24,6 +27,7 @@ public class GraphGenerator {
     private Translator translator;
     private FileWriter fileWriter;
     private int maxDistance;
+    private String startingArticle;
 
 
     public GraphGenerator(int maxDistance) {
@@ -39,6 +43,7 @@ public class GraphGenerator {
 
     public void start(String startingArticleName) {
         //TODO translate article name to int, execute query on startingArticle, make node, put it in newNodes
+       this.startingArticle = startingArticleName;
         int articleNumber = translator.getNumberFromName(startingArticleName);
         int[] links = queryExecutor.query(articleNumber);
         Node node = new Node(articleNumber, links, 0);
@@ -56,7 +61,7 @@ public class GraphGenerator {
                 if (!queriesMade.contains(currentLink) && currentNode.getDistanceFromStart() + 1 <= maxDistance) {
                     System.out.println("Querying page: " + translator.getNameFromNumber(currentLink));
                     int[] newLinks = queryExecutor.query(currentLink);
-                    Node newNode = new Node(currentLink, newLinks, currentNode.getDistanceFromStart() + 1); // I guess here we input result from query?
+                    Node newNode = new Node(currentLink, newLinks, currentNode.getDistanceFromStart() + 1);
                     newNodes.add(newNode);
                 }}
             }
@@ -70,11 +75,25 @@ public class GraphGenerator {
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
+        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH-mm-ss");
+        Date date = new Date();
+        String timestamp = dateFormat.format(date);
+
+        String nodeFolder = FilePaths.NODES_DIRECTORY + startingArticle + " " + timestamp+"\\";
+
+        /// Create a folder for node
+        File nodeDir = new File(nodeFolder);
+
+        if (!nodeDir.exists())
+        {
+            nodeDir.mkdir();
+        }
+
 
         for (Node currentNode : readyNodes) {
             currentNode.translateAllNumbersToNames(translator);
             String nodeFileName = currentNode.getArticleId() + ".json";
-            String finalNodePath = FilePaths.NODES_DIRECTORY + nodeFileName;
+            String finalNodePath = nodeFolder + nodeFileName;
             String nodeAsJSON = gson.toJson(currentNode);
             //TODO something goes wrong here
             if (nodeAsJSON.length() < 10){

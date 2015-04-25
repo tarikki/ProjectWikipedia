@@ -1,6 +1,7 @@
 package main;
 
 import modules.QueryInterface;
+import util.FilePaths;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -14,13 +15,13 @@ import java.util.HashMap;
  */
 public class QueryExecutor implements QueryInterface {
 
-    private String locationOfGraph = "/media/extradikke/UbuntuData/wikipedia_data/data_dump/dataMaps/wiki_in_numbers.txt";
+
     private HashMap<Integer, int[]> pageToLinks;
 
     public QueryExecutor() {
         this.pageToLinks = new HashMap<>();
         long startTime = System.nanoTime();
-        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(locationOfGraph))) {
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(FilePaths.LOCATION_OF_GRAPH))) {
             String currentLine;
             int index = 0;
             while ((currentLine = bufferedReader.readLine()) != null) {

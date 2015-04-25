@@ -2,7 +2,10 @@ package main;
 
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
+import util.FilePaths;
+
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
@@ -13,7 +16,7 @@ public class Translator {
 
     private BiMap<String, Integer> articleName_Number;
     private BiMap<Integer, String> number_Name;
-    private String articleMappingLocation = "/media/extradikke/UbuntuData/wikipedia_data/data_dump/dataMaps/article_name_to_number.txt";
+
 
 
     public Translator() {
@@ -27,7 +30,7 @@ public class Translator {
 
         System.out.println("Starting to load mappings");
         long startTime = System.nanoTime();
-        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(articleMappingLocation))) {
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(FilePaths.ARTICLE_MAPPING_LOCATION))) {
             String currentLine;
             while ((currentLine = bufferedReader.readLine()) != null) {
                 String[] keyValue = currentLine.split("\\|");
