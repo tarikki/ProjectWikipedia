@@ -6,7 +6,7 @@ package main;
 public class Main {
 
     public static void main(String[] args) {
-        GraphGenerator graphGenerator = new GraphGenerator(1);
+        GraphGenerator graphGenerator = new GraphGenerator(2);
         graphGenerator.start("2014 Winter Olympics");
         graphGenerator.processAllNodes();
         graphGenerator.saveNodes();

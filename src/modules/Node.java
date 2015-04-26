@@ -26,7 +26,7 @@ public class Node {
 
     public Node(int articleId, int[] linkNumbers, int distanceFromStart) {
         this.articleId = articleId;
-        if (linkNumbers.length > 0) {
+        if (linkNumbers != null) {
             for (int linkNumber : linkNumbers) {
                 this.linkNumbers.add(linkNumber);
             }
@@ -45,8 +45,10 @@ public class Node {
     }
 
     public void translateAllNumbersToNames(Translator translator) {
-        for (Integer linkNumber : linkNumbers) {
-            linkNames.add(translator.getNameFromNumber(linkNumber));
+        if (linkNumbers != null) {
+            for (Integer linkNumber : linkNumbers) {
+                linkNames.add(translator.getNameFromNumber(linkNumber));
+            }
         }
     }
 
@@ -83,7 +85,11 @@ public class Node {
     }
 
     public int getNumberOfLinks() {
-        return linkNames.size();
+        if (linkNumbers != null) {
+            return linkNumbers.size();
+        } else {
+            return 0;
+        }
     }
 
     public void setArticleId(int articleId) {
@@ -101,8 +107,7 @@ public class Node {
                 "articleId=" + articleId +
                 ", articleName='" + articleName + '\'' +
                 ", distanceFromStart=" + distanceFromStart +
-                ", linkNamesLength=" + linkNames.size() +
-                ", linkNumbersLength=" + linkNumbers.size() +
+                ", linksSize=" + getNumberOfLinks() +
                 '}';
     }
 }

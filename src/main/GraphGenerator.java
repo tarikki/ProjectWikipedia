@@ -47,6 +47,7 @@ public class GraphGenerator {
         int articleNumber = translator.getNumberFromName(startingArticleName);
         int[] links = queryExecutor.query(articleNumber);
         Node node = new Node(articleNumber, links, 0);
+        queriesMade.add(articleNumber);
         newNodes.add(node);
 
     }
@@ -56,13 +57,16 @@ public class GraphGenerator {
 
             Node currentNode = newNodes.poll();
             ArrayList<Integer> links = currentNode.getLinkNumbers();
-            for (int currentLink : links) {
-                if (currentLink != 0) {
-                    if (!queriesMade.contains(currentLink) && currentNode.getDistanceFromStart() + 1 <= maxDistance) {
-                        System.out.println("Querying page: " + translator.getNameFromNumber(currentLink));
-                        int[] newLinks = queryExecutor.query(currentLink);
-                        Node newNode = new Node(currentLink, newLinks, currentNode.getDistanceFromStart() + 1);
-                        newNodes.add(newNode);
+            if (links != null) {
+                for (int currentLink : links) {
+                    if (currentLink != 0) {
+                        if (!queriesMade.contains(currentLink) && currentNode.getDistanceFromStart() + 1 <= maxDistance) {
+                            queriesMade.add(currentLink);
+                            System.out.println("Querying page: " + translator.getNameFromNumber(currentLink));
+                            int[] newLinks = queryExecutor.query(currentLink);
+                            Node newNode = new Node(currentLink, newLinks, currentNode.getDistanceFromStart() + 1);
+                            newNodes.add(newNode);
+                        }
                     }
                 }
             }
@@ -80,7 +84,8 @@ public class GraphGenerator {
         Date date = new Date();
         String timestamp = dateFormat.format(date);
 
-        String nodeFolder = FilePaths.NODES_DIRECTORY + startingArticle + " " + timestamp + "\\";
+
+        String nodeFolder = FilePaths.NODES_DIRECTORY + startingArticle + " " + timestamp + FilePaths.osPathCorrection();
 
         /// Create a folder for node
         File nodeDir = new File(nodeFolder);
@@ -89,8 +94,10 @@ public class GraphGenerator {
             nodeDir.mkdir();
         }
 
-
+        int edges = 0;
+        System.out.println("Nodes to save: " + readyNodes.size());
         for (Node currentNode : readyNodes) {
+            edges += currentNode.getNumberOfLinks();
             currentNode.translateAllNumbersToNames(translator);
             String nodeFileName = currentNode.getArticleId() + ".json";
             String finalNodePath = nodeFolder + nodeFileName;
@@ -104,6 +111,7 @@ public class GraphGenerator {
                 e.printStackTrace();
             }
         }
+        System.out.println("Number of Edges: " + edges);
 
     }
 }
