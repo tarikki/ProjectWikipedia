@@ -36,6 +36,7 @@ public class Node {
         this.distanceFromStart = distanceFromStart;
     }
 
+
     public int getArticleId() {
         return articleId;
     }

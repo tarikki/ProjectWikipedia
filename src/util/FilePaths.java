@@ -20,14 +20,14 @@ public class FilePaths {
 //
 
         // Pepe's Directory
-//        NODES_DIRECTORY = "C:\\Workspace BU\\Wikipedia\\" + DEFAULT_DIRECTORY_NAME + osPathCorrection();
-//        LOCATION_OF_GRAPH = "C:\\Workspace BU\\Wikipedia\\Data\\wiki_in_numbers.txt" + osPathCorrection();
-//        ARTICLE_MAPPING_LOCATION = "C:\\Workspace BU\\Wikipedia\\Data\\article_name_to_number.txt" + osPathCorrection();
+        NODES_DIRECTORY = "C:\\Workspace BU\\Wikipedia\\" + DEFAULT_DIRECTORY_NAME + osPathCorrection();
+       LOCATION_OF_GRAPH = "C:\\Workspace BU\\Wikipedia\\Data\\wiki_in_numbers.txt" + osPathCorrection();
+        ARTICLE_MAPPING_LOCATION = "C:\\Workspace BU\\Wikipedia\\Data\\article_name_to_number.txt" + osPathCorrection();
 
         //Tariq's Directory
-        NODES_DIRECTORY = "/media/extradikke/UbuntuData/wikipedia_data/finalGraphs/";
-        LOCATION_OF_GRAPH = "/media/extradikke/UbuntuData/wikipedia_data/wikidump_processed/wiki_in_numbers.txt";
-        ARTICLE_MAPPING_LOCATION = "/media/extradikke/UbuntuData/wikipedia_data/wikidump_processed/articles_to_numbers.txt";
+  //      NODES_DIRECTORY = "/media/extradikke/UbuntuData/wikipedia_data/finalGraphs/";
+  //      LOCATION_OF_GRAPH = "/media/extradikke/UbuntuData/wikipedia_data/wikidump_processed/wiki_in_numbers.txt";
+  //      ARTICLE_MAPPING_LOCATION = "/media/extradikke/UbuntuData/wikipedia_data/wikidump_processed/articles_to_numbers.txt";
 
     }
 
