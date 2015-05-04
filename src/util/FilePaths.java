@@ -11,8 +11,8 @@ public class FilePaths {
 
     public static String NODES_DIRECTORY;
     private static String DEFAULT_DIRECTORY_NAME = "Nodes";
-    public  static String LOCATION_OF_GRAPH;
-    public static  String ARTICLE_MAPPING_LOCATION;
+    public static String LOCATION_OF_GRAPH;
+    public static String ARTICLE_MAPPING_LOCATION;
 
     // Static block so these are correct when program is first started
     static {
@@ -25,9 +25,9 @@ public class FilePaths {
 //        ARTICLE_MAPPING_LOCATION = "C:\\Workspace BU\\Wikipedia\\Data\\article_name_to_number.txt" + osPathCorrection();
 
         //Tariq's Directory
-        NODES_DIRECTORY  ="/media/extradikke/UbuntuData/wikipedia_data/subGraphs/";
-        LOCATION_OF_GRAPH = "/media/extradikke/UbuntuData/wikipedia_data/data_dump/dataMaps/wiki_in_numbers.txt";
-         ARTICLE_MAPPING_LOCATION = "/media/extradikke/UbuntuData/wikipedia_data/data_dump/dataMaps/article_name_to_number.txt";
+        NODES_DIRECTORY = "/media/extradikke/UbuntuData/wikipedia_data/finalGraphs/";
+        LOCATION_OF_GRAPH = "/media/extradikke/UbuntuData/wikipedia_data/wikidump_processed/wiki_in_numbers.txt";
+        ARTICLE_MAPPING_LOCATION = "/media/extradikke/UbuntuData/wikipedia_data/wikidump_processed/articles_to_numbers.txt";
 
     }
 

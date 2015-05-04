@@ -41,6 +41,11 @@ public class GraphGenerator {
 
     }
 
+    public void reset(){
+        queriesMade = new HashSet<>();
+
+    }
+
     public void start(String startingArticleName) {
         //TODO translate article name to int, execute query on startingArticle, make node, put it in newNodes
         this.startingArticle = startingArticleName;
@@ -62,7 +67,7 @@ public class GraphGenerator {
                     if (currentLink != 0) {
                         if (!queriesMade.contains(currentLink) && currentNode.getDistanceFromStart() + 1 <= maxDistance) {
                             queriesMade.add(currentLink);
-                            System.out.println("Querying page: " + translator.getNameFromNumber(currentLink));
+//                            System.out.println("Querying page: " + translator.getNameFromNumber(currentLink));
                             int[] newLinks = queryExecutor.query(currentLink);
                             Node newNode = new Node(currentLink, newLinks, currentNode.getDistanceFromStart() + 1);
                             newNodes.add(newNode);
@@ -95,6 +100,7 @@ public class GraphGenerator {
         }
 
         int edges = 0;
+        System.out.println(startingArticle);
         System.out.println("Nodes to save: " + readyNodes.size());
         for (Node currentNode : readyNodes) {
             edges += currentNode.getNumberOfLinks();

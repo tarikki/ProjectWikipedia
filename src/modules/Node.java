@@ -45,6 +45,7 @@ public class Node {
     }
 
     public void translateAllNumbersToNames(Translator translator) {
+        articleName = translator.getNameFromNumber(articleId);
         if (linkNumbers != null) {
             for (Integer linkNumber : linkNumbers) {
                 linkNames.add(translator.getNameFromNumber(linkNumber));

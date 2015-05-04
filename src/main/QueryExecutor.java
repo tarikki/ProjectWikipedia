@@ -27,6 +27,7 @@ public class QueryExecutor implements QueryInterface {
             while ((currentLine = bufferedReader.readLine()) != null) {
                 index++;
                 String[] tempPageAndLinks = currentLine.split("\\|");
+//                System.out.println(currentLine);
                 int[] pageAndLinks = new int[tempPageAndLinks.length];
                 int arrayPosition = 0;
                 for (String link : tempPageAndLinks) {
