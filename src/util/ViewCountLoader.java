@@ -27,7 +27,7 @@ public class ViewCountLoader {
         }
     }
 
-    public HashMap<String, String> loadDate(DateTime dateTime) {
+    public HashMap<String, Integer> loadDate(DateTime dateTime) {
         System.out.println(dateTime.toLocalDate());
         File rightFile = null;
         for (File file : files) {
@@ -38,8 +38,8 @@ public class ViewCountLoader {
             }
 
         }
-        if (rightFile != null) mapViewCounts(rightFile);
-        return null;
+
+        return mapViewCounts(rightFile);
     }
 
     private HashMap<String, Integer> mapViewCounts(File file) {
@@ -54,16 +54,17 @@ public class ViewCountLoader {
                     int dailyCount = 0;
                     StringBuilder sb = new StringBuilder();
 //                    System.out.println(line.trim());
-                    if (elements.length == 3 && line.matches(".*\\d+")) {
-                        String[] title = Arrays.copyOf(elements, elements.length - 2);
+                    if (elements.length > 2 && line.matches(".*\\d+")) {
+                        String[] title = Arrays.copyOfRange(elements, 0, elements.length - 2);
                         for (String s : title) {
                             sb.append(s);
                             sb.append(" ");
                         }
                         String finalTitle = sb.toString().trim().toLowerCase();
                         if (!finalTitle.equals("")) {
-                            try{
-                            dailyCount = Integer.valueOf(elements[elements.length - 2]);} catch (NumberFormatException e){
+                            try {
+                                dailyCount = Integer.valueOf(elements[elements.length - 2]);
+                            } catch (NumberFormatException e) {
                                 System.out.println(line);
                                 dailyCount = 0;
                             }
@@ -74,7 +75,7 @@ public class ViewCountLoader {
                         if (!viewCounts.containsKey(finalTitle)) {
                             viewCounts.put(finalTitle, dailyCount);
                         } else {
-                            viewCounts.put(finalTitle, viewCounts.get(finalTitle)+dailyCount);
+                            viewCounts.put(finalTitle, viewCounts.get(finalTitle) + dailyCount);
 
 //                            System.out.println("Duplicate: " + line);
 //                            System.out.println(finalTitle + ", views: " + viewCounts.get(finalTitle));
@@ -87,8 +88,8 @@ public class ViewCountLoader {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println(viewCounts.get("ace of spades"));
-        System.out.println(viewCounts.get("ace_of_spades"));
+//        System.out.println(viewCounts.get("ace of spades"));
+//        System.out.println(viewCounts.get("ace_of_spades"));
         System.out.println("done in " + String.valueOf((System.nanoTime() - start) / 1000000000));
         return viewCounts;
     }

@@ -6,6 +6,7 @@ package modules;
 
 import main.Translator;
 import org.joda.time.DateTime;
+import org.joda.time.Days;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -45,24 +46,29 @@ public class Node {
         return articleId;
     }
 
+    public void setupViewCount(DateTime startDate, DateTime endDate){
+        this.startDate = startDate;
+        this.endDate = endDate;
+        int duration = Days.daysBetween(startDate, endDate).getDays()+1;
+        this.viewcounts = new int[duration];
+
+
+    }
+
     public void setViewcount(int viewcount, DateTime dateTime){
-        //TODO daysbetween inclusive or exclusive?
+        //TODO check date ranges
+        int index = Days.daysBetween(startDate, dateTime).getDays();
+        this.viewcounts[index] = viewcount;
     }
     public DateTime getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(DateTime endDate) {
-        this.endDate = endDate;
-    }
 
     public DateTime getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(DateTime startDate) {
-        this.startDate = startDate;
-    }
 
     public int getDistanceFromStart() {
         return distanceFromStart;
