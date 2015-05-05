@@ -5,6 +5,7 @@ package modules;
  */
 
 import main.Translator;
+import org.joda.time.DateTime;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,6 +21,9 @@ public class Node {
     private String articleName;
     private int articleId;
     private int distanceFromStart;
+    private DateTime startDate;
+    private DateTime endDate;
+    private int[] viewcounts;
     private ArrayList<String> linkNames = new ArrayList<>();
     private ArrayList<Integer> linkNumbers = new ArrayList<>();
 
@@ -39,6 +43,25 @@ public class Node {
 
     public int getArticleId() {
         return articleId;
+    }
+
+    public void setViewcount(int viewcount, DateTime dateTime){
+        //TODO daysbetween inclusive or exclusive?
+    }
+    public DateTime getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(DateTime endDate) {
+        this.endDate = endDate;
+    }
+
+    public DateTime getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(DateTime startDate) {
+        this.startDate = startDate;
     }
 
     public int getDistanceFromStart() {
