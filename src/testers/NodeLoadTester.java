@@ -9,7 +9,7 @@ public class NodeLoadTester {
 
     public static void main(String[] args) {
 
-        String filepath = "C:\\Workspace BU\\Wikipedia\\Nodes\\2014 Winter Olympics 25-04-2015 13-39-22";
+        String filepath = "C:\\Workspace BU\\Wikipedia\\Nodes\\Malaysia Airlines Flight 17 05-05-2015 16-50-22";
 
         NodeLoader nodeLoader = new NodeLoader();
         nodeLoader.loadAllNodes(filepath);
