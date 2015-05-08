@@ -5,9 +5,10 @@ package modules;
  */
 
 import main.Translator;
+import org.joda.time.DateTime;
+import org.joda.time.Days;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * The node that will be used for processing, not the one that is saved as JSON
@@ -20,6 +21,12 @@ public class Node {
     private String articleName;
     private int articleId;
     private int distanceFromStart;
+    private double meanViewCountThisYear;
+    private String startDate;
+    private DateTime jodaStartDate;
+    private String endDate;
+    private DateTime jodaEndDate;
+    private int[] viewcounts;
     private ArrayList<String> linkNames = new ArrayList<>();
     private ArrayList<Integer> linkNumbers = new ArrayList<>();
 
@@ -40,6 +47,58 @@ public class Node {
     public int getArticleId() {
         return articleId;
     }
+
+    public void setupViewCount(DateTime startDate, DateTime endDate) {
+        if (this.startDate == null && this.endDate == null) {
+            this.startDate = startDate.toLocalDate().toString();
+            this.endDate = endDate.toLocalDate().toString();
+            int duration = Days.daysBetween(startDate, endDate).getDays() + 1;
+            this.viewcounts = new int[duration];
+        } else {
+            System.out.println("Already setup");
+        }
+    }
+
+    public void setupDateTime(){
+        this.jodaStartDate = new DateTime(startDate);
+        this.jodaEndDate = new DateTime(endDate);
+    }
+
+    public void resetViewCount(DateTime startDate, DateTime endDate) {
+        this.startDate = startDate.toLocalDate().toString();
+        this.endDate = endDate.toLocalDate().toString();
+        int duration = Days.daysBetween(startDate, endDate).getDays() + 1;
+        this.viewcounts = new int[duration];
+    }
+
+    public void setViewCountForDay(int viewcount, DateTime dateTime) {
+        //TODO check date ranges
+        int index = Days.daysBetween(jodaStartDate, dateTime).getDays();
+        this.viewcounts[index] = viewcount;
+    }
+
+    public void calculateMeanViewCount() {
+        int sum = 0;
+        int counter = 0;
+        for (int viewcount : viewcounts) {
+            if (viewcount != -1) {
+                sum += viewcount;
+                counter++;
+            }
+        }
+
+        this.meanViewCountThisYear = sum / counter;
+    }
+
+    public DateTime getEndDate() {
+        return new DateTime(endDate);
+    }
+
+
+    public DateTime getStartDate() {
+        return new DateTime(startDate);
+    }
+
 
     public int getDistanceFromStart() {
         return distanceFromStart;
