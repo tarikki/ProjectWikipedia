@@ -43,6 +43,7 @@ public class GraphIO {
             e.printStackTrace();
         }
 
+        graph.setupDateTime();
 
 
 

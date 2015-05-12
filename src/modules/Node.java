@@ -49,6 +49,8 @@ public class Node {
     }
 
     public void setupViewCount(DateTime startDate, DateTime endDate) {
+        this.jodaStartDate = startDate;
+        this.jodaEndDate = endDate;
         if (this.startDate == null && this.endDate == null) {
             this.startDate = startDate.toLocalDate().toString();
             this.endDate = endDate.toLocalDate().toString();
@@ -59,9 +61,10 @@ public class Node {
         }
     }
 
-    public void setupDateTime(){
-        this.jodaStartDate = new DateTime(startDate);
-        this.jodaEndDate = new DateTime(endDate);
+    public void setupJodaDateTime(){
+        if (this.startDate != null && this.endDate != null) {
+        this.jodaStartDate = new DateTime(this.startDate);
+        this.jodaEndDate = new DateTime(this.endDate);}
     }
 
     public void resetViewCount(DateTime startDate, DateTime endDate) {
@@ -75,6 +78,11 @@ public class Node {
         //TODO check date ranges
         int index = Days.daysBetween(jodaStartDate, dateTime).getDays();
         this.viewcounts[index] = viewcount;
+    }
+
+    public int getViewCountForDay(DateTime dateTime){
+        int index = Days.daysBetween(jodaStartDate, dateTime).getDays();
+        return this.viewcounts[index];      //This might throw a nullPointerException
     }
 
     public void calculateMeanViewCount() {
@@ -161,6 +169,21 @@ public class Node {
         this.distanceFromStart = distanceFromStart;
     }
 
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
+
+    public int[] getViewcounts() {
+        return viewcounts;
+    }
+
+    public void setViewcounts(int[] viewcounts) {
+        this.viewcounts = viewcounts;
+    }
 
     @Override
     public String toString() {
