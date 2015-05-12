@@ -28,8 +28,7 @@ public class NodeLoader {
 
     public ArrayList<Node> loadAllNodes(String dirPath) {
 
-
-     long start = System.nanoTime();
+        long start = System.nanoTime();
     int nodeCounter = 0;
 
     nodes = new ArrayList<>();
@@ -62,33 +61,6 @@ public class NodeLoader {
 
     System.out.println("Processed " + nodes.size() + " nodes " + "in " + TimeUnit.SECONDS.convert(end, TimeUnit.NANOSECONDS) + " seconds");
 
-        nodes = new ArrayList<>();
-        dir = new File(dirPath);
-        gson = new Gson();
-        int counter = 0;
-        System.out.println(dir.listFiles().length);
-        for (File file : dir.listFiles()) {
-            counter++;
-            try {
-                nodeReader = new JsonReader(new FileReader(file));
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-                System.out.println("Not a valid file path!");
-            }
-
-            Node node = gson.fromJson(nodeReader, Node.class);
-
-            nodes.add(node);
-            try {
-                nodeReader.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            System.out.println(counter);
-        }
-
-
-        System.out.println("Processed " + nodes.size() + " nodes ");
 
         return nodes;
     }
