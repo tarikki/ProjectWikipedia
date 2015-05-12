@@ -31,8 +31,6 @@ import java.util.Iterator;
  */
 public class JavaToExcel {
 
-
-//TODO make sure there is no error when counting loops from 0 / 1 (because we need to skip 1st cell)
     // TODO decide what to use (HSSF / XSSF) Need to do testing with bigger datasets.
 
     public void writeExcel(String graphLocation) throws IOException {
@@ -62,48 +60,55 @@ public class JavaToExcel {
         DateTime start = graph.getJodaStartDate();
         DateTime end = graph.getJodaEndDate();
 
-        int range = Days.daysBetween(start.toLocalDate(), end.toLocalDate()).getDays();
 
-
+        System.out.println(nodesToProcess.size() + " nodes to process.");
         System.out.println("Starting to write the Excel file..");
 
-        //Y axis (dates)
-        XSSFRow yaxis = sheet.createRow(0);
+
+        int daysBetween = Days.daysBetween(start.toLocalDate(), end.toLocalDate()).getDays();
+
+        // Y-axis. Populates fields with dates in range.
+        Row titleRow = sheet.createRow(0);
+
+        for (int i = 1; i <= daysBetween + 1; i++) {
+            titleRow.createCell(i).setCellValue(start.toString(fmt));
+            start = start.plusDays(1);
+            sheet.autoSizeColumn(i);
+        }
 
 
-        /// ERROR MIGHT BE HERE with the counter.
-        int counter = 0;
-        for (DateTime currentDate = start; currentDate.isBefore(end); currentDate = currentDate.plusDays(1))
-        {
-
-            counter++;
-            yaxis.createCell(counter).setCellValue(currentDate.toString(fmt));
-            sheet.autoSizeColumn(counter);
+        // X-axis. Populates field with article names.
+        for (int i = 1; i < nodesToProcess.size(); i++) {
+            Row r = sheet.createRow(i);
+            r.createCell(0).setCellValue(nodesToProcess.get(i).getArticleName());
+        }
 
 
-        /// X axis (article names)
-        XSSFRow first = sheet.createRow(1); /// so we can skip 1st cell. OR ERROR MIGHT BE HERE
-        first.createCell(0).setCellValue(nodesToProcess.get(0).getArticleName());
+        // Loop that populates fields with view count for each article
+        int counter = 1;
+
+        for (DateTime currentDate = graph.getJodaStartDate(); !currentDate.isAfter(end); currentDate = currentDate.plusDays(1)) {
+            System.out.println("Going through date: " + currentDate);
 
 
-        for (int k = 1; k < nodesToProcess.size(); k++) {
-            Node node = nodesToProcess.get(k);
+            for (int i = 1; i < nodesToProcess.size(); i++) {
+                Node node = nodesToProcess.get(i - 1);
+                Row row = sheet.getRow(i);
 
-            XSSFRow row = sheet.createRow(k);
-            row.createCell(0).setCellValue(node.getArticleName());
-
-
-            for (int j = 1; j <= range; j++) {
-                row.createCell(j).setCellValue(node.getViewCountForDay(currentDate));
+                if (row == null) {
+                    row = sheet.createRow(i + 1);
+                }
+                row.createCell(counter).setCellValue(node.getViewCountForDay(currentDate));
             }
-        }
+            counter++;
+
+
         }
 
 
-        //Write the workbook to an output stream.
         sheet.autoSizeColumn(0); // This seems to take a LONG time. Might be easier to just do it manually.
 
-
+        //Write the workbook to an output stream.
         FileOutputStream finalExcel = new FileOutputStream(fileName);
         wb.write(finalExcel);
         System.out.println("Successfully saved the Excel to: " + fileName);
