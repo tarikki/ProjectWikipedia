@@ -22,6 +22,14 @@ public class Graph {
         this.startingArticle = startingArticle;
     }
 
+    public void nulllifyJoda(){
+        this.jodaStartDate = null;
+        this.jodaEndDate = null;
+        for (Node node : nodes) {
+            node.nullifyJoda();
+        }
+
+    }
     public void setupNodeJoda() {
         for (Node node : nodes) {
             node.setupJodaDateTime();
@@ -80,5 +88,21 @@ public class Graph {
 
     public void setStartDate(String startDate) {
         this.startDate = startDate;
+    }
+
+    public DateTime getJodaEndDate() {
+        return jodaEndDate;
+    }
+
+    public void setJodaEndDate(DateTime jodaEndDate) {
+        this.jodaEndDate = jodaEndDate;
+    }
+
+    public DateTime getJodaStartDate() {
+        return jodaStartDate;
+    }
+
+    public void setJodaStartDate(DateTime jodaStartDate) {
+        this.jodaStartDate = jodaStartDate;
     }
 }

@@ -54,7 +54,7 @@ public class GraphIO {
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
-
+        graph.nulllifyJoda();
 
         /// Create a folder for node
         File nodeDir = new File(saveDirectory);

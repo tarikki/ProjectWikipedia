@@ -43,6 +43,11 @@ public class Node {
         this.distanceFromStart = distanceFromStart;
     }
 
+    public void nullifyJoda(){
+        this.jodaStartDate = null;
+        this.jodaEndDate = null;
+    }
+
 
     public int getArticleId() {
         return articleId;
@@ -96,15 +101,6 @@ public class Node {
         }
 
         this.meanViewCountThisYear = sum / counter;
-    }
-
-    public DateTime getEndDate() {
-        return new DateTime(endDate);
-    }
-
-
-    public DateTime getStartDate() {
-        return new DateTime(startDate);
     }
 
 
@@ -183,6 +179,30 @@ public class Node {
 
     public void setViewcounts(int[] viewcounts) {
         this.viewcounts = viewcounts;
+    }
+
+    public DateTime getJodaEndDate() {
+        return jodaEndDate;
+    }
+
+    public void setJodaEndDate(DateTime jodaEndDate) {
+        this.jodaEndDate = jodaEndDate;
+    }
+
+    public DateTime getJodaStartDate() {
+        return jodaStartDate;
+    }
+
+    public void setJodaStartDate(DateTime jodaStartDate) {
+        this.jodaStartDate = jodaStartDate;
+    }
+
+    public String getEndDate() {
+        return endDate;
+    }
+
+    public String getStartDate() {
+        return startDate;
     }
 
     @Override

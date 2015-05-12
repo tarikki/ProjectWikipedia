@@ -70,6 +70,8 @@ public class ViewCountMapper {
 
                         if (viewCounts.containsKey(node.getArticleName())) {
                             node.setViewCountForDay(viewCounts.get(node.getArticleName()), dateTime);
+                        } else {
+                            node.setViewCountForDay(0,dateTime);
                         }
                     }
                 }
