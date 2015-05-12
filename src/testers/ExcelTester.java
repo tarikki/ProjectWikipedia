@@ -11,6 +11,6 @@ public class ExcelTester {
 
     public static void main(String[] args) throws IOException {
         JavaToExcel javaToExcel = new JavaToExcel();
-        javaToExcel.writeExcel();
+        javaToExcel.writeExcel("C:\\Workspace BU\\Wikipedia\\Data\\eurovision song contest 2014.json");
     }
 }
