@@ -14,13 +14,16 @@ public class GraphLoaderTester {
 
     public static void main(String[] args) {
         GraphIO graphIO = new GraphIO();
-        Graph graph = graphIO.loadGraph("/media/extradikke/UbuntuData/wikipedia_data/mappedGraphs/eurovision song contest 2014.json");
+        Graph graph = graphIO.loadGraph("/media/extradikke/UbuntuData/wikipedia_data/mappedGraphs/ebola virus epidemic in west africa.json");
+//        Graph graph = graphIO.loadGraph("/media/extradikke/UbuntuData/wikipedia_data/mappedGraphs/2014 fifa world cup.json");
         System.out.println(graph.getNodes().get(0).getViewCountForDay(new DateTime(2014, 1, 2, 0, 0)));
         boolean done = false;
         ArrayList<Node> nodes = graph.getNodes();
         Node node = null;
+        String articleName = "ebolavirus";
+        articleName = articleName.replace("_", " ").toLowerCase();
         for (Node node1 : nodes) {
-            if (node1.getArticleName().equals("instagram")){
+            if (node1.getArticleName().equals(articleName)){
                 node = node1;
             }
         }
