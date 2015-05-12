@@ -51,7 +51,7 @@ public class JavaToExcel {
 
         org.joda.time.format.DateTimeFormatter fmt = DateTimeFormat.forPattern("dd-MM-yyyy");
 
-        String fileName = FilePaths.EXCEL_FILES + timestamp + ".xlsx" + FilePaths.osPathCorrection();    //name and location of Excel file
+        String fileName = FilePaths.EXCEL_FILES + graph.getStartingArticle() + " " + timestamp + ".xlsx" + FilePaths.osPathCorrection();    //name and location of Excel file
 
 
         /// Stuff for the excel file
@@ -63,6 +63,9 @@ public class JavaToExcel {
         DateTime end = graph.getJodaEndDate();
 
         int range = Days.daysBetween(start.toLocalDate(), end.toLocalDate()).getDays();
+
+
+        System.out.println("Starting to write the Excel file..");
 
         //Y axis (dates)
         XSSFRow yaxis = sheet.createRow(0);
@@ -100,7 +103,7 @@ public class JavaToExcel {
         //Write the workbook to an output stream.
         sheet.autoSizeColumn(0); // This seems to take a LONG time. Might be easier to just do it manually.
 
-        System.out.println("Starting to write the Excel file..");
+
         FileOutputStream finalExcel = new FileOutputStream(fileName);
         wb.write(finalExcel);
         System.out.println("Successfully saved the Excel to: " + fileName);
