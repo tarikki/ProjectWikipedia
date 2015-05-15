@@ -3,6 +3,7 @@ package util;
 import main.GraphGenerator;
 import modules.Graph;
 import modules.Node;
+import org.apache.poi.hslf.model.Sheet;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -35,11 +36,22 @@ public class JavaToExcel {
 
     public void writeExcel(String graphLocation) throws IOException {
 
+        int maxDistance = 2;
         ArrayList<Node> nodesToProcess;
 
         GraphIO graphIO = new GraphIO();
         Graph graph = graphIO.loadGraph(graphLocation);
         nodesToProcess = graph.getNodes();
+
+        int highest = 0;
+
+
+        for (Node node : nodesToProcess) {
+
+            if (node.getDistanceFromStart() > highest) {
+                highest = node.getDistanceFromStart();
+            }
+        }
 
 
         /// Timestamp for filename
@@ -53,10 +65,21 @@ public class JavaToExcel {
 
 
         /// Stuff for the excel file
-        String sheetName = "Sheet 1";    //name of Sheet of excel file
-        XSSFWorkbook wb = new XSSFWorkbook();
-        XSSFSheet sheet = wb.createSheet(sheetName);
+        String sheetName = "";    //name of Sheet of excel file
 
+        ArrayList<XSSFSheet> sheets = new ArrayList<>();
+
+        XSSFWorkbook wb = new XSSFWorkbook();
+
+        /// Create sheets.
+        for (int i = 1; i < maxDistance + 1; i++) {
+            sheetName = "Sheet with hop count " + i;
+            XSSFSheet sheet = wb.createSheet(sheetName);
+            sheets.add(sheet);
+
+        }
+
+        System.out.println(sheets.size());
         DateTime start = graph.getJodaStartDate();
         DateTime end = graph.getJodaEndDate();
 
@@ -68,19 +91,44 @@ public class JavaToExcel {
         int daysBetween = Days.daysBetween(start.toLocalDate(), end.toLocalDate()).getDays();
 
         // Y-axis. Populates fields with dates in range.
-        Row titleRow = sheet.createRow(0);
 
-        for (int i = 1; i <= daysBetween + 1; i++) {
-            titleRow.createCell(i).setCellValue(start.toString(fmt));
-            start = start.plusDays(1);
-            sheet.autoSizeColumn(i);
+
+        for (XSSFSheet sheet : sheets) {
+            Row titleRow = sheet.createRow(0);
+
+            for (int i = 1; i <= daysBetween + 1; i++) {
+                titleRow.createCell(i).setCellValue(start.toString(fmt));
+                start = start.plusDays(1);
+                sheet.autoSizeColumn(i);
+
+            }
+            start = graph.getJodaStartDate();
         }
 
-
+int c1 = 1;
+        int c2 = 1;
         // X-axis. Populates field with article names.
         for (int i = 1; i < nodesToProcess.size(); i++) {
-            Row r = sheet.createRow(i);
-            r.createCell(0).setCellValue(nodesToProcess.get(i).getArticleName());
+            Node node = nodesToProcess.get(i - 1);
+
+
+            if (node.getDistanceFromStart()==1) {
+                Row r = sheets.get(0).createRow(c1);
+                Cell cell = r.createCell(0);
+                cell.setCellValue(nodesToProcess.get(i).getArticleName());
+            c1++;
+            }
+
+              else{
+                    Row r1 = sheets.get(1).createRow(c2);
+                    Cell cell1 = r1.createCell(0);
+                    cell1.setCellValue(nodesToProcess.get(i).getArticleName());
+                c2++;
+
+
+            }
+
+
         }
 
 
@@ -90,32 +138,58 @@ public class JavaToExcel {
         for (DateTime currentDate = graph.getJodaStartDate(); !currentDate.isAfter(end); currentDate = currentDate.plusDays(1)) {
             System.out.println("Going through date: " + currentDate);
 
-
+            int x1 = 1;
+            int x2 = 1;
             for (int i = 1; i < nodesToProcess.size(); i++) {
                 Node node = nodesToProcess.get(i - 1);
-                Row row = sheet.getRow(i);
 
-                if (row == null) {
-                    row = sheet.createRow(i + 1);
+                switch (node.getDistanceFromStart()) {
+
+                    case 1:
+                        Row row = sheets.get(0).getRow(x1);
+
+
+                        if (row == null) {
+                            row = sheets.get(0).createRow(x1 + 1);
+                        }
+                        row.createCell(counter).setCellValue(node.getViewCountForDay(currentDate));
+                        x1++;
+                        break;
+                    case 2:
+                        Row row1 = sheets.get(1).getRow(x2);
+                        if (row1 == null) {
+                            row1 = sheets.get(1).createRow(x2 + 1);
+                        }
+                        row1.createCell(counter).setCellValue(node.getViewCountForDay(currentDate));
+                        x2++;
+                        break;
+                    default:
+                        break;
                 }
-                row.createCell(counter).setCellValue(node.getViewCountForDay(currentDate));
+
+
             }
             counter++;
-
-
         }
 
 
-        sheet.autoSizeColumn(0); // This seems to take a LONG time. Might be easier to just do it manually.
+        for (XSSFSheet sheet : sheets)
+        {
+            sheet.autoSizeColumn(0);
+        }
 
-        //Write the workbook to an output stream.
-        FileOutputStream finalExcel = new FileOutputStream(fileName);
-        wb.write(finalExcel);
-        System.out.println("Successfully saved the Excel to: " + fileName);
-        finalExcel.flush();
-        finalExcel.close();
+            //Write the workbook to an output stream.
+            FileOutputStream finalExcel = new FileOutputStream(fileName);
+            wb.write(finalExcel);
+            System.out.println("Successfully saved the Excel to: " + fileName);
+            finalExcel.flush();
+            finalExcel.close();
+
+
+
 
     }
+
 
 }
 
