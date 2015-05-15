@@ -118,9 +118,10 @@ public class JavaToExcel {
         int c1 = 1;
         int c2 = 1;
 
+
         // X-axis. Populates field with article names.
-        for (int i = 1; i < nodesToProcess.size(); i++) {
-            Node node = nodesToProcess.get(i - 1);
+        for (int i = 0; i < nodesToProcess.size(); i++) {
+            Node node = nodesToProcess.get(i);
 
 
             if (node.getDistanceFromStart() == 0) {
@@ -161,8 +162,8 @@ public class JavaToExcel {
             int x1 = 1;
             int x2 = 1;
 
-            for (int i = 1; i < nodesToProcess.size(); i++) {
-                Node node = nodesToProcess.get(i - 1);
+            for (int i = 0; i < nodesToProcess.size(); i++) {
+                Node node = nodesToProcess.get(i);
 
 
                 if (node.getDistanceFromStart() == 0) {
