@@ -62,7 +62,7 @@ public class JavaToExcel {
 
 
         /// Create sheets.
-        for (int i = 1; i < MAX_DISTANCE + 1; i++) {
+        for (int i = 0; i <= MAX_DISTANCE; i++) {
             sheetName = "Articles " + i + " hop(s) from start";
             XSSFSheet sheet = wb.createSheet(sheetName);
             sheets.add(sheet);
@@ -91,7 +91,7 @@ public class JavaToExcel {
 
         String fileName = FilePaths.EXCEL_FILES + graph.getStartingArticle() + " " + timestamp + ".xlsx" + FilePaths.osPathCorrection();    //name and location of Excel file
 
-
+        final long startTime = System.nanoTime();
         System.out.println(nodesToProcess.size() + " nodes to process.");
         System.out.println("Starting to write the Excel file..");
 
@@ -114,6 +114,7 @@ public class JavaToExcel {
         }
 
         // Sheet row counters.
+        int c0 = 1;
         int c1 = 1;
         int c2 = 1;
 
@@ -122,15 +123,23 @@ public class JavaToExcel {
             Node node = nodesToProcess.get(i - 1);
 
 
-            if (node.getDistanceFromStart() == 1) {
-                Row r = sheets.get(0).createRow(c1);
+            if (node.getDistanceFromStart() == 0) {
+                Row r = sheets.get(0).createRow(c0);
                 Cell cell = r.createCell(0);
                 cell.setCellValue(nodesToProcess.get(i).getArticleName());
-                c1++;
-            } else {
-                Row r1 = sheets.get(1).createRow(c2);
+                c0++;
+
+            }
+
+            if (node.getDistanceFromStart() == 1) {
+                Row r1 = sheets.get(1).createRow(c1);
                 Cell cell1 = r1.createCell(0);
                 cell1.setCellValue(nodesToProcess.get(i).getArticleName());
+                c1++;
+            } else {
+                Row r2 = sheets.get(2).createRow(c2);
+                Cell cell2 = r2.createCell(0);
+                cell2.setCellValue(nodesToProcess.get(i).getArticleName());
                 c2++;
 
 
@@ -148,29 +157,42 @@ public class JavaToExcel {
             System.out.println("Going through date: " + currentDate);
 
             /// Sheet row counters
+            int x0 = 1;
             int x1 = 1;
             int x2 = 1;
 
             for (int i = 1; i < nodesToProcess.size(); i++) {
                 Node node = nodesToProcess.get(i - 1);
 
-                if (node.getDistanceFromStart() == 1) {
-                    Row row = sheets.get(0).getRow(x1);
+
+                if (node.getDistanceFromStart() == 0) {
+                    Row row = sheets.get(0).getRow(x0);
 
 
                     if (row == null) {
-                        row = sheets.get(0).createRow(x1 + 1);
+                        row = sheets.get(0).createRow(x0 + 1);
                     }
                     row.createCell(counter).setCellValue(node.getViewCountForDay(currentDate));
+                    x0++;
+                }
+
+                if (node.getDistanceFromStart() == 1) {
+                    Row row1 = sheets.get(1).getRow(x1);
+
+
+                    if (row1 == null) {
+                        row1 = sheets.get(1).createRow(x1 + 1);
+                    }
+                    row1.createCell(counter).setCellValue(node.getViewCountForDay(currentDate));
                     x1++;
                 }
 
                 else {
-                    Row row1 = sheets.get(1).getRow(x2);
-                    if (row1 == null) {
-                        row1 = sheets.get(1).createRow(x2 + 1);
+                    Row row2 = sheets.get(2).getRow(x2);
+                    if (row2 == null) {
+                        row2 = sheets.get(2).createRow(x2 + 1);
                     }
-                    row1.createCell(counter).setCellValue(node.getViewCountForDay(currentDate));
+                    row2.createCell(counter).setCellValue(node.getViewCountForDay(currentDate));
                     x2++;
 
                 }
@@ -187,6 +209,11 @@ public class JavaToExcel {
         FileOutputStream finalExcel = new FileOutputStream(fileName);
         wb.write(finalExcel);
         System.out.println("Successfully saved the Excel to: " + fileName);
+        final long duration = System.nanoTime() - startTime;
+        double seconds = (double)duration / 1000000000.0;
+
+        System.out.println("This process took about: " + seconds + "seconds" );
+
         finalExcel.flush();
         finalExcel.close();
 
