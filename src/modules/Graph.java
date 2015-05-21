@@ -22,7 +22,7 @@ public class Graph {
         this.startingArticle = startingArticle;
     }
 
-    public void nulllifyJoda(){
+    public void nulllifyJoda() {
         this.jodaStartDate = null;
         this.jodaEndDate = null;
         for (Node node : nodes) {
@@ -30,6 +30,7 @@ public class Graph {
         }
 
     }
+
     public void setupNodeJoda() {
         for (Node node : nodes) {
             node.setupJodaDateTime();
@@ -57,6 +58,31 @@ public class Graph {
             System.out.println("Already setup");
         }
     }
+
+    public void countAverageViewCountsForEachNode(DateTime startPeriod, DateTime endPeriod, int maxLevel) {
+        int nodesDone = 0;
+        for (Node node : nodes) {
+            if (node.getDistanceFromStart() <= maxLevel) {
+                double viewCountsSum = 0;
+                double viewCountsCalculated = 0;
+
+                for (DateTime currentDate = startPeriod; !currentDate.isAfter(endPeriod); currentDate = currentDate.plusDays(1)) {
+                    int viewcounts = node.getViewCountForDay(currentDate);
+                    if (viewcounts != -1) {
+                        viewCountsSum += viewcounts;
+                        viewCountsCalculated++;
+                    }
+
+                }
+
+                node.setMeanViewCountsForPeriod(viewCountsSum / viewCountsCalculated);
+            } nodesDone++;
+            System.out.println("Nodes done "+nodesDone);
+        }
+    }
+
+
+
 
     public ArrayList<Node> getNodes() {
         return nodes;
