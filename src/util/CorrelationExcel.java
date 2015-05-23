@@ -112,7 +112,7 @@ public class CorrelationExcel {
                 cell4.setCellValue(statisticsNodes.get(i).getCovariance());
 
                 c0++;
-                
+
 
             }
 
@@ -136,7 +136,7 @@ public class CorrelationExcel {
 
 
                 c1++;
-                System.out.println(c1);
+                
             }
         }
 
