@@ -27,6 +27,9 @@ public class Node {
     private String endDate;
     private DateTime jodaEndDate;
     private int[] viewcounts;
+    private DateTime viewCountMeanStart;
+    private DateTime viewCountMeanEnd;
+    private double meanViewCountsForPeriod;
     private ArrayList<String> linkNames = new ArrayList<>();
     private ArrayList<Integer> linkNumbers = new ArrayList<>();
 
@@ -46,6 +49,8 @@ public class Node {
     public void nullifyJoda(){
         this.jodaStartDate = null;
         this.jodaEndDate = null;
+        this.viewCountMeanEnd = null;
+        this.viewCountMeanStart = null;
     }
 
 
@@ -86,11 +91,17 @@ public class Node {
     }
 
     public int getViewCountForDay(DateTime dateTime){
-        int index = Days.daysBetween(jodaStartDate, dateTime).getDays();
-        return this.viewcounts[index];      //This might throw a nullPointerException
+        try {
+            int index = Days.daysBetween(jodaStartDate, dateTime).getDays();
+            return this.viewcounts[index];      //This might throw a nullPointerException
+        } catch (NullPointerException e){
+            e.printStackTrace();
+            System.out.println(articleName);
+
+        } return 0;
     }
 
-    public void calculateMeanViewCount() {
+    public void calculateMeanViewCountForEntireYear() {
         int sum = 0;
         int counter = 0;
         for (int viewcount : viewcounts) {
@@ -104,6 +115,10 @@ public class Node {
     }
 
 
+    public void setMeanViewCountsForPeriod(double meanViewCountsForPeriod) {
+        this.meanViewCountsForPeriod = meanViewCountsForPeriod;
+    }
+
     public int getDistanceFromStart() {
         return distanceFromStart;
     }
@@ -116,6 +131,12 @@ public class Node {
             }
         }
     }
+
+    public double getMeanViewCountsForPeriod() {
+        return meanViewCountsForPeriod;
+    }
+
+
 
     public void nameArticle(String articleName) {
         this.articleName = articleName;

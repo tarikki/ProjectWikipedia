@@ -20,6 +20,8 @@ public class ViewCountMapper {
     private String[] graphDirectories;
     private ArrayList<Graph> graphs;
     private String outputDirectory;
+    private String ANSI_RED = "\u001B[31m";
+    private String ANSI_RESET = "\u001B[0m";
 //    private ArrayList<>
 
 
@@ -80,7 +82,7 @@ public class ViewCountMapper {
             if (dateTime.isAfter(endDate)) {
                 Done = true;
             }
-            System.out.println("Cycle done in " + String.valueOf((System.nanoTime() - start) / 1000000000));
+            System.out.println(ANSI_RED + "Cycle done in " +ANSI_RESET + String.valueOf((System.nanoTime() - start) / 1000000000));
 
         }
 

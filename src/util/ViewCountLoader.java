@@ -30,9 +30,11 @@ public class ViewCountLoader {
     public HashMap<String, Integer> loadDate(DateTime dateTime) {
         System.out.println(dateTime.toLocalDate());
         File rightFile = null;
+        String ANSI_RED = "\u001B[31m";
+        String ANSI_RESET = "\u001B[0m";
         for (File file : files) {
             if (file.getName().equals("pagecounts-" + dateTime.toLocalDate() + ".txt")) {
-                System.out.println("found it: " + file.getName() + ", size: " + file.length());
+                System.out.println("found it: " + ANSI_RED+file.getName() + ANSI_RESET+", size: " + file.length());
                 rightFile = file;
 
             }
