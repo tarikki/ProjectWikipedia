@@ -14,6 +14,7 @@ public class FilePaths {
     public static String LOCATION_OF_GRAPH;
     public static String ARTICLE_MAPPING_LOCATION;
     public static String EXCEL_FILES;
+    public static String EXCEL_FILES_CORRELATION;
     public static String ARTICLE_JSONS;
 
     // Static block so these are correct when program is first started
@@ -27,6 +28,7 @@ public class FilePaths {
        LOCATION_OF_GRAPH = "C:\\Workspace BU\\Wikipedia\\Data\\wiki_in_numbers.txt" + osPathCorrection();
         ARTICLE_MAPPING_LOCATION = "C:\\Workspace BU\\Wikipedia\\Data\\article_name_to_number.txt" + osPathCorrection();
         EXCEL_FILES = "C:\\Workspace BU\\Wikipedia\\Data\\Excels" + osPathCorrection();
+        EXCEL_FILES_CORRELATION = "C:\\Workspace BU\\Wikipedia\\Data\\Excels\\Correlations" + osPathCorrection();
 
 
         //Tariq's Directory
