@@ -11,6 +11,6 @@ public class ExcelTester {
 
     public static void main(String[] args) throws IOException {
         JavaToExcel javaToExcel = new JavaToExcel();
-        javaToExcel.writeExcel("C:\\Workspace BU\\Wikipedia\\Data\\mappedGraphs\\2014 fifa world cup.json");
+        javaToExcel.writeExcel("C:\\Workspace BU\\Wikipedia\\Data\\mappedGraphs\\sinking of the mv sewol.json");
     }
 }

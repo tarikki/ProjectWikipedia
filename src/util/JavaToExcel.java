@@ -169,10 +169,6 @@ public class JavaToExcel {
                 if (node.getDistanceFromStart() == 0) {
                     Row row = sheets.get(0).getRow(x0);
 
-
-                    if (row == null) {
-                        row = sheets.get(0).createRow(x0 + 1);
-                    }
                     row.createCell(counter).setCellValue(node.getViewCountForDay(currentDate));
                     x0++;
                 }
@@ -181,18 +177,13 @@ public class JavaToExcel {
                     Row row1 = sheets.get(1).getRow(x1);
 
 
-                    if (row1 == null) {
-                        row1 = sheets.get(1).createRow(x1 + 1);
-                    }
                     row1.createCell(counter).setCellValue(node.getViewCountForDay(currentDate));
                     x1++;
                 }
 
                 else {
                     Row row2 = sheets.get(2).getRow(x2);
-                    if (row2 == null) {
-                        row2 = sheets.get(2).createRow(x2 + 1);
-                    }
+
                     row2.createCell(counter).setCellValue(node.getViewCountForDay(currentDate));
                     x2++;
 

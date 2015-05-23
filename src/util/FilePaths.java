@@ -14,6 +14,7 @@ public class FilePaths {
     public static String LOCATION_OF_GRAPH;
     public static String ARTICLE_MAPPING_LOCATION;
     public static String EXCEL_FILES;
+    public static String ARTICLE_JSONS;
 
     // Static block so these are correct when program is first started
     static {
@@ -22,6 +23,7 @@ public class FilePaths {
 
         // Pepe's Directory
         NODES_DIRECTORY = "C:\\Workspace BU\\Wikipedia\\" + DEFAULT_DIRECTORY_NAME + osPathCorrection();
+        ARTICLE_JSONS = "C:\\Workspace BU\\Wikipedia\\Data\\ArticleJSON\\" + osPathCorrection();
        LOCATION_OF_GRAPH = "C:\\Workspace BU\\Wikipedia\\Data\\wiki_in_numbers.txt" + osPathCorrection();
         ARTICLE_MAPPING_LOCATION = "C:\\Workspace BU\\Wikipedia\\Data\\article_name_to_number.txt" + osPathCorrection();
         EXCEL_FILES = "C:\\Workspace BU\\Wikipedia\\Data\\Excels" + osPathCorrection();
