@@ -90,4 +90,6 @@ public class StatisticsNode implements Comparable<StatisticsNode>{
         else if (this.correlation > other.getCorrelation()){ return 1;}
         else return 0;
     }
+
+
 }
