@@ -13,6 +13,6 @@ public class CorrelationExcelTester {
         CorrelationExcel correlationExcel = new CorrelationExcel();
         correlationExcel.createStatisticsNodes("C:\\Workspace BU\\Wikipedia\\Data\\mappedGraphs\\sinking of the mv sewol.json");
         correlationExcel.createWorkBook();
-        correlationExcel.writeExcel();
+//        correlationExcel.writeExcel();
     }
 }

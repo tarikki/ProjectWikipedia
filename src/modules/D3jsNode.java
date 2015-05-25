@@ -6,11 +6,13 @@ package modules;
 public class D3jsNode {
     private String name;
     private int group;
-    private int weight = 1;
+    private double correlation;
 
-    public D3jsNode(String name, int group) {
+    public D3jsNode(String name, int group, double correlation) {
         this.group = group;
         this.name = name;
+        this.correlation = correlation;
+
     }
 
     public int getGroup() {
@@ -27,5 +29,13 @@ public class D3jsNode {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public double getCorrelation() {
+        return correlation;
+    }
+
+    public void setCorrelation(double correlation) {
+        this.correlation = correlation;
     }
 }

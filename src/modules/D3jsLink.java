@@ -6,13 +6,13 @@ package modules;
 public class D3jsLink {
     private int source;
     private int target;
-    private int value;
-    private int weight = 1;
+    private double correlationBin;
 
-    public D3jsLink(int source, int destination, int value) {
+
+    public D3jsLink(int source, int destination, int correlationBin) {
         this.target = destination;
         this.source = source;
-        this.value = value;
+        this.correlationBin = correlationBin;
     }
 
     public int getTarget() {
@@ -31,11 +31,11 @@ public class D3jsLink {
         this.source = source;
     }
 
-    public int getValue() {
-        return value;
+    public double getCorrelationBin() {
+        return correlationBin;
     }
 
-    public void setValue(int value) {
-        this.value = value;
+    public void setCorrelationBin(double correlationBin) {
+        this.correlationBin = correlationBin;
     }
 }

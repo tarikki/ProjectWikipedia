@@ -31,7 +31,7 @@ public class D3Wrapper {
         this.nodes.add(d3jsNode);
     }
 
-    public void mapLinks(ArrayList<Node> regularNodes) {
+    public void mapLinks(String mainArticle, ArrayList<StatisticsNode> statisticsNodes, ArrayList<Node> regularNodes) {
         ArrayList<String> nodeNames = new ArrayList<>();
         for (D3jsNode node : nodes) {
             nodeNames.add(node.getName());
@@ -40,6 +40,11 @@ public class D3Wrapper {
         HashMap<String, Node> regularNodesHashed = new HashMap<>();
         for (Node regularNode : regularNodes) {
             regularNodesHashed.put(regularNode.getArticleName(), regularNode);
+        }
+
+        HashMap<String, StatisticsNode> statisticsNodeHashMap = new HashMap<>();
+        for (StatisticsNode statisticsNode : statisticsNodes) {
+            statisticsNodeHashMap.put(statisticsNode.getArticleName(), statisticsNode);
         }
 
         HashMap<String, Integer> nodeIndeces = new HashMap<>();
@@ -51,28 +56,44 @@ public class D3Wrapper {
             System.out.println(node.getName() + " " + nodes.indexOf(node));
         }
 
-        for (D3jsNode node : nodes) {
-            Node regularNode = regularNodesHashed.get(node.getName());
-            int source = nodeIndeces.get(node.getName());
+
+            Node regularNode = regularNodesHashed.get(mainArticle);
+            int source = nodeIndeces.get(mainArticle);
             for (String linkName : regularNode.getLinkNames()) {
                 if (nodeNames.contains(linkName)) {
                     int destination = nodeIndeces.get(linkName);
                     if (destination != source) {
-                        D3jsLink link = new D3jsLink(source, destination, 1);
-                        if (source == 0){
-                            link.setValue(2);
-                        }
+                        D3jsLink link = new D3jsLink(source, destination, correlationBin(statisticsNodeHashMap.get(linkName).getCorrelation()));
                         links.add(link);
                     }
                 }
 
             }
-        }
+
+
+//        for (D3jsNode node : nodes) {
+//            Node regularNode = regularNodesHashed.get(node.getName());
+//            int source = nodeIndeces.get(node.getName());
+//            for (String linkName : regularNode.getLinkNames()) {
+//                if (nodeNames.contains(linkName)) {
+//                    int destination = nodeIndeces.get(linkName);
+//                    if (destination != source) {
+//                        D3jsLink link = new D3jsLink(source, destination, correlationBin(statisticsNodeHashMap.get(linkName).getCorrelation()));
+//                        links.add(link);
+//                    }
+//                }
+//
+//            }
+//        }
 
         System.out.println("Nodes: " + nodes.size() + ", Links: " + links.size());
 //        for (D3jsLink link : links) {
 //            nodes.get(link.getSource());
 //            nodes.get(link.getTarget());
 //        }
+    }
+
+    private int correlationBin(double correlation){
+        return (int)Math.floor(correlation*10);
     }
 }

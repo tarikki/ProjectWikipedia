@@ -11,6 +11,7 @@ import org.joda.time.DateTime;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOError;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -27,6 +28,7 @@ public class CorrelationExcel {
     private ArrayList<StatisticsNode> statisticsNodes;
     private Graph graph;
     private DateFormat dateFormat;
+    private String mainArticleName;
     private String timestamp;
 
     public void createStatisticsNodes(String graphLocation) {
@@ -44,6 +46,11 @@ public class CorrelationExcel {
         }
     }
 
+    public void preGeneratedStatisticsNode(ArrayList<StatisticsNode> statisticsNodes, String mainArticleName) {
+        this.statisticsNodes = statisticsNodes;
+        this.mainArticleName = mainArticleName;
+    }
+
     public void createWorkBook() {
 
         dateFormat = new SimpleDateFormat("dd-MM-yyyy HH-mm-ss");
@@ -59,7 +66,7 @@ public class CorrelationExcel {
 
 
         /// Create sheets.
-        for (int i = 0; i <= 1; i++) {
+        for (int i = 0; i <= 3; i++) {
             sheetName = "Articles " + i + " hop(s) from start";
             XSSFSheet sheet = wb.createSheet(sheetName);
             sheets.add(sheet);
@@ -67,11 +74,11 @@ public class CorrelationExcel {
     }
 
 
-    public void writeExcel() throws IOException {
+    public void writeExcel(String articleName, DateTime startDate, DateTime endDate) {
         createWorkBook();
 
 
-        String fileName = FilePaths.EXCEL_FILES_CORRELATION + graph.getStartingArticle() +" " + timestamp +  ".xlsx" + FilePaths.osPathCorrection();    //name and location of Excel file
+        String fileName = FilePaths.EXCEL_FILES_CORRELATION + mainArticleName + " - Correlation from " + articleName + " start: " + startDate.toLocalDate() + " end:" + endDate.toLocalDate() + ".xlsx" + FilePaths.osPathCorrection();    //name and location of Excel file
         System.out.println(fileName);
 
         for (XSSFSheet sheet : sheets) {
@@ -87,6 +94,7 @@ public class CorrelationExcel {
 
         int c0 = 1;
         int c1 = 1;
+        int c2 = 1;
 
 
         for (int i = 0; i < statisticsNodes.size(); i++) {
@@ -136,15 +144,44 @@ public class CorrelationExcel {
 
 
                 c1++;
-                
+
+            }
+
+            if (statisticsNode.getDistanceFromStart() == 2) {
+                Row r2 = sheets.get(2).createRow(c2);
+                Cell cellr0 = r2.createCell(0); //
+
+                cellr0.setCellValue(statisticsNodes.get(i).getArticleName()); // Article name
+
+                Cell cellc1 = r2.createCell(1); // Correlation
+                cellc1.setCellValue(statisticsNodes.get(i).getCorrelation());
+
+                Cell cellc2 = r2.createCell(2); /// Standard deviation
+                cellc2.setCellValue(statisticsNodes.get(i).getSTD());
+
+                Cell cellc3 = r2.createCell(3);  // Mean
+                cellc3.setCellValue(statisticsNodes.get(i).getMeanViewCountsForPeriod());
+
+                Cell cellc4 = r2.createCell(4); // Covariance
+                cellc4.setCellValue(statisticsNodes.get(i).getCovariance());
+
+
+                c2++;
+
             }
         }
 
         autoSizeColumns();
-        FileOutputStream finalExcel = new FileOutputStream(fileName);
-        wb.write(finalExcel);
-        finalExcel.flush();
-        finalExcel.close();
+        try {
+
+
+            FileOutputStream finalExcel = new FileOutputStream(fileName);
+            wb.write(finalExcel);
+            finalExcel.flush();
+            finalExcel.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
 
     }

@@ -91,5 +91,7 @@ public class StatisticsNode implements Comparable<StatisticsNode>{
         else return 0;
     }
 
-
+    public void setCorrelation(double correlation) {
+        this.correlation = correlation;
+    }
 }

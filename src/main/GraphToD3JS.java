@@ -28,13 +28,13 @@ public class GraphToD3JS {
         for (Node node : nodes) {
             if (counter < nodes.size()+3) {
                 if (node.getDistanceFromStart() < 2) {
-                    d3Wrapper.addNode(new D3jsNode(node.getArticleName(), node.getDistanceFromStart()));
+//                    d3Wrapper.addNode(new D3jsNode(node.getArticleName(), node.getDistanceFromStart()));
                     counter++;
                 }
             }
         }
-        d3Wrapper.mapLinks(nodes);
-        D3JsNodeSaver.saveGraph("//media/extradikke/UbuntuData/programming/HTML/WebstormProjects/D3js/tryouts/", "ebola", d3Wrapper);
+//        d3Wrapper.mapLinks(nodes);
+//        D3JsNodeSaver.saveGraph("//media/extradikke/UbuntuData/programming/HTML/WebstormProjects/D3js/tryouts/", "ebola", d3Wrapper);
 
 
     }
