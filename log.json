@@ -1,0 +1,39 @@
+{
+  "simpleLogs": [
+    {
+      "articleName": "2014 winter olympics",
+      "start": "2014-02-01",
+      "end": "2014-03-04"
+    },
+    {
+      "articleName": "ebola virus epidemic in west africa",
+      "start": "2014-09-01",
+      "end": "2014-10-31"
+    },
+    {
+      "articleName": "2014 fifa world cup",
+      "start": "2014-06-01",
+      "end": "2014-07-21"
+    },
+    {
+      "articleName": "eurovision song contest 2014",
+      "start": "2014-05-01",
+      "end": "2014-05-17"
+    },
+    {
+      "articleName": "malaysia airlines flight 370",
+      "start": "2014-03-08",
+      "end": "2014-04-22"
+    },
+    {
+      "articleName": "sinking of the mv sewol",
+      "start": "2014-04-22",
+      "end": "2014-05-25"
+    },
+    {
+      "articleName": "malaysia airlines flight 17",
+      "start": "2014-07-17",
+      "end": "2014-08-31"
+    }
+  ]
+}
